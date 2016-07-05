@@ -1,2 +1,2 @@
-# demoapp
-developed in sailjs and angularjs
+# Sample Code
+AngularJS and ExpressJS Demo
