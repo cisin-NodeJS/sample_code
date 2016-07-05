@@ -1,0 +1,78 @@
+brand<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">
+    Edit brand <small>brand Details</small>
+</h3>
+<div class="page-bar" >
+  <ul class="page-breadcrumb">
+    <li>
+      <i class="fa fa-home"></i>
+      <a href="#/dashboard.html">Home</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <a ui-stage="products">brand</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+  </ul>
+  <!-- side bar menu-->
+  <div class="page-toolbar">
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" dropdown-menu-hover data-delay="1000" data-close-others="true">
+          Actions <i class="fa fa-angle-down"></i>
+      </button>
+      <ul class="dropdown-menu pull-right" role="menu">
+        <li>
+          <a ui-stage="ProductAdd">
+            <i class="icon-user"></i> New brand
+          </a>
+        </li> 
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+
+<div class="row" ng-init="viewBrand()">
+  <div class="col-md-12">
+    <!-- BEGIN PORTLET-->
+    <div class="portlet box yellow-crusta">
+
+      <div class="portlet-body form">
+        <form class="form-horizontal form-bordered" name="brandForm">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">brand Title</label>
+            <div class="col-sm-4">
+              <input type="text" id="brandTitle" value = '{{brand.title}}' name="title" class="form-control" ng-model="brand.title" ng-pattern="/^[a-zA-Z0-9_ ]*$/" required>
+              <span class="error" style="color:red" ng-show="brandForm.title.$touched && brandForm.title.$invalid">
+                <span ng-show="brandForm.title.$error.required">category title is required.</span>
+              </span>
+            </div>
+          </div> 
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-4">
+              <textarea name="Description" value= '{{brand.description}}' class="form-control" ng-model="brand.Description" maxlength="{{maxLength}}" ng-keyup="check()" ng-readonly="checked"></textarea>
+              <div id="characters">
+                <span>Characters left: {{charecter}}</span>
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                 <a type="button" class="btn default" ng-disabled="$scope.brand.title == '' || $scope.brandForm.title.$touched && $scope.brandForm.title.$invalid" ng-click="updatebrand(brand._id)">update</a>
+                 <a type="button" class="btn default" ui-sref="brands">Back</a>
+              </div>
+            </div>
+          </div>
+        </form> 
+      </div>
+
+    </div>
+    <!-- END PORTLET-->
+  </div>
+</div>
+  

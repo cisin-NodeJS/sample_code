@@ -1,0 +1,95 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">
+    Add Category <small>category add with all specification</small>
+</h3>
+<div class="page-bar" ng-init="categoryDefault()">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#/dashboard.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-stage="categories">Category</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-stage="CategoryAdd">Form Tools</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN PORTLET-->
+    <div class="portlet box yellow-crusta">
+
+      <div class="portlet-body form">
+        <form class="form-horizontal form-bordered" name="categoryForm">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Category Title</label>
+            <div class="col-sm-4">
+              <input type="text" id="categoryTitle" name="title" class="form-control" ng-model="category.title" ng-pattern="/^[a-zA-Z0-9-_ ]*$/" required>
+              <span class="error" style="color:red" ng-show="categoryForm.title.$touched && categoryForm.title.$invalid">
+                <span ng-show="categoryForm.title.$error.required">category title is required.</span>
+              </span>
+            </div>
+          </div> 
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Category Description</label>
+            <div class="col-sm-4">
+              <textarea name="shortDescription" class="form-control" ng-model="category.Description" maxlength="{{maxLength}}" ng-keyup="check()"></textarea>
+              <div id="characters">
+                <span>Characters left: {{charecter}}</span>
+              </div>
+              <input type="checkbox" ng-model="checked1"  class="md-check"> Add Sub-Category</input>
+            </div>
+          </div>
+          <div id="subcategory" ng-if="checked1">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Sub-Category Title</label>
+              <div class="col-sm-4">
+                <input type="text" id="subcategoryTitle" name="subTitle" class="form-control" ng-model="subcategory.title" ng-pattern="/^[a-zA-Z0-9_ ]*$/" required>
+                <span class="error" style="color:red" ng-show="categoryForm.subTitle.$touched && categoryForm.subTitle.$invalid">
+                <span ng-show="categoryForm.subTitle.$error.required">category subTitle is required.</span>
+              </span>
+              </div>
+            </div> 
+            <div class="form-group">
+              <label class="col-sm-3 control-label">sub-Category Description</label>
+              <div class="col-sm-4">
+                <textarea name="subcategoryDescription" class="form-control" ng-model="subcategory.Description" maxlength="{{maxLength}}" ng-keyup="checksubcategory()"></textarea>
+                <div id="characters">
+                  <span>Characters left: {{subcategorycharecter}}</span>
+                </div>
+                <!-- <span class="error" style="color:red" ng-show="categoryForm.subcategoryDescription.$error.minlength">
+                Too short! Description
+                </span> -->
+                <span class="error" style="color:red" ng-show="categoryForm.subcategoryDescription.$error.maxlength">
+                  Too long! Description
+                </span><br>
+              </div>
+            </div>
+                         
+          </div>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <button type="button" class="btn purple" ng-disabled="checkValidation()" ng-click="addcategory(category.subcategory.title,category.subcategory.Description)"><i class="fa fa-check"></i> Submit</button>
+                <button type="button" class="btn default">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form> 
+      </div>
+
+    </div>
+    <!-- END PORTLET-->
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,95 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">
+    Edit Category <small>category Details</small>
+</h3>
+<div class="page-bar" >
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#/dashboard.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-stage="products">Category</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+    </ul>
+    <!-- side bar menu-->
+    <div class="page-toolbar">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" dropdown-menu-hover data-delay="1000" data-close-others="true">
+                Actions <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a ui-stage="ProductAdd">
+                        <i class="icon-user"></i> New category </a>
+                </li> 
+               
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+
+<div class="row" ng-init="viewCategory()">
+  <div class="col-md-12">
+    <!-- BEGIN PORTLET-->
+    <div class="portlet box yellow-crusta">
+
+      <div class="portlet-body form">
+        <form class="form-horizontal form-bordered" name="categoryForm">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Category Title</label>
+            <div class="col-sm-4">
+              <input type="text" id="categoryTitle" name="title" value ='{{category.title}}' class="form-control" ng-model="category.title" ng-pattern="/^[a-zA-Z0-9_ ]*$/" required>
+              <span class="error" style="color:red" ng-show="categoryForm.title.$touched && categoryForm.title.$invalid">
+                <span ng-show="categoryForm.title.$error.required">category title is required.</span>
+              </span>
+            </div>
+          </div> 
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-4">
+              <textarea name="Description" value= '{{category.description}}' class="form-control" ng-model="category.Description" maxlength="{{maxLength}}" ng-keyup="check()"></textarea>
+              <div id="characters">
+                <span>Characters left: {{charecter}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-if="isSubCategory">
+            <label class="col-sm-3 control-label">Sub-Category Title</label>
+            <div class="col-sm-4">
+              <input type="text" id="categoryTitle" value = '{{category.subcategories.title}}' name="subtitle" class="form-control" ng-model="category.subcategory.title" ng-pattern="/^[a-zA-Z0-9]*$/" required>
+              <span class="error" style="color:red" ng-show="categoryForm.subtitle.$touched && categoryForm.subtitle.$invalid">
+                <span ng-show="categoryForm.subtitle.$error.required">sub category title is required.</span>
+              </span>
+            </div>
+          </div> 
+          <div class="form-group" ng-if="isSubCategory">
+            <label class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-4">
+              <textarea name="subDescription" value= '{{category.subcategories.Description}}' class="form-control" ng-model="category.subcategory.Description" maxlength="{{maxLength}}" ng-keyup="check()"></textarea>
+              <div id="characters">
+                <span>Characters left: {{charecter}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions" >
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <a type="button" class="btn default" ng-disabled="category.title == '' || category.subcategory.title == '' || categoryForm.title.$touched && categoryForm.title.$invalid || categoryForm.subtitle.$touched && categoryForm.subtitle.$invalid " ng-click="updatecategory(category._id)">update</a>
+                <a type="button" class="btn default" ui-sref="categories">Back</a>
+              </div>
+            </div>
+          </div>
+        </form> 
+      </div>
+
+    </div>
+    <!-- END PORTLET-->
+  </div>
+</div>
+
+  

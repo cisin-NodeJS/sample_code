@@ -1,0 +1,173 @@
+<!--Banner -->
+<div class="banner" ng-init="getUserDetails()">
+    <div class="container">
+        <div class="banner-bottom">
+            <div class="banner-bottom-left">
+                <h2>B<br>U<br>Y</h2>
+            </div>
+            <div class="banner-bottom-right">
+                <div class="callbacks_container">
+                    <ul id="slider4" class="rslides callbacks callbacks1">
+                        <li id="callbacks1_s0" style="display: block; transition: opacity 500ms ease-in-out 0s; float: none; position: absolute; opacity: 0; z-index: 1;" class="">
+                            <div class="banner-info">
+                                <h3>Smart But Casual</h3>
+                                <p>Start your shopping here...</p>
+                            </div>
+                        </li>
+                        <li id="callbacks1_s1" style="display: block; transition: opacity 500ms ease-in-out 0s; float: none; position: absolute; opacity: 0; z-index: 1;" class="">
+                            <div class="banner-info">
+                                <h3>Shop Online</h3>
+                                <p>Start your shopping here...</p>
+                            </div>
+                        </li>
+                        <li id="callbacks1_s2" style="display: block; transition: opacity 500ms ease-in-out 0s; float: left; position: relative; opacity: 1; z-index: 2;" class="callbacks1_on">
+                            <div class="banner-info">
+                                <h3>Pack your Bag</h3>
+                                <p>Start your shopping here...</p>
+                            </div>								
+                        </li>
+                    </ul><ul class="callbacks_tabs callbacks1_tabs"><li class="callbacks1_s1"><a class="callbacks1_s1" href="#">1</a></li><li class="callbacks1_s2"><a class="callbacks1_s2" href="#">2</a></li><li class="callbacks1_s3 callbacks_here"><a class="callbacks1_s3" href="#">3</a></li></ul>
+                </div>
+                <!--banner-->
+                <script src="js/responsiveslides.min.js"></script>
+                <script>
+            // You can also use "$(window).load(function() {"
+            $(function () {
+                // Slideshow 4
+                $("#slider4").responsiveSlides({
+                    auto: true,
+                    pager: true,
+                    nav: false,
+                    speed: 500,
+                    namespace: "callbacks",
+                    before: function () {
+                        $('.events').append("&lt;li&gt;before event fired.&lt;/li&gt;");
+                    },
+                    after: function () {
+                        $('.events').append("&lt;li&gt;after event fired.&lt;/li&gt;");
+                    }
+                });
+
+            });
+                </script>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="shop">
+            <a href="">SHOP COLLECTION NOW</a>
+        </div>
+    </div>
+</div>
+<!--/banner-->
+<div class="main-content">
+    <div class="online-strip">
+        <div class="col-md-4 follow-us">
+            <h3>follow us : <a href="#" class="twitter"></a><a href="#" class="facebook"></a></h3>
+        </div>
+        <div class="col-md-4 shipping-grid">
+            <div class="shipping">
+                <img alt="" src="images/shipping.png">
+            </div>
+            <div class="shipping-text">
+                <h3>Free Shipping</h3>
+                <p>on orders over $ 199</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-md-4 online-order">
+            <p>Order online</p>
+            <h3>Tel:999 4567 8902</h3>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="products-grid" ng-controller="ProductsController" ng-init="getProducts()">
+      <header>
+        <h3 class="head text-center">Latest Products</h3>
+      </header>
+      <div style="padding-left: 20;">
+        <input type="text" placeholder="Search Product" ng-model="searchText" class="head text-center" />
+        <span>
+          <a href="" class="icon-magnifier"></a>
+        </span>
+      </div>
+      
+      <div ng-controller="CartCtrl">
+        <div class="col-md-4 product simpleCart_shelfItem text-center" ng-repeat="product in products | filter:searchText">
+          <a href="#/product/{{product._id}}">
+            <img ng-src="{{product.image.path}}" style="height: 250px; border:1px solid #021a40;">
+          </a>
+          <div class="mask">
+            <a href="#/product/{{product._id}}">Quick View</a>
+          </div>
+          <a href="#/product/{{product._id}}" class="product_name">{{product.title}}</a> 
+          <ngcart-addtocart id="{{product._id}}" name="{{product.title}} #{{product._id}}" price="{{product.salePrice}}" quantity="1" quantity-max="10" data="{{product}}">Buy</ngcart-addtocart>
+        </div>
+      </div>
+        <!--					
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                                                        <a href="#/products"><img alt="" src="images/p2.jpg"></a>
+                                                        <div class="mask">
+                                                                <a href="#/products">Quick View</a>
+                                                        </div>
+                                                        <a href="#/products" class="product_name">great explorer</a>
+                                                        <p><a href="#" class="item_add"><i></i> <span class="item_price">$599.8</span></a></p>
+        </div>
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                <a href="#/products"><img alt="" src="images/p3.jpg"></a>
+                <div class="mask">
+                        <a href="#/products">Quick View</a>
+                </div>
+                <a href="#/products" class="product_name">similique sunt</a>
+                <p><a href="#" class="item_add"><i></i> <span class="item_price">$359.6</span></a></p>
+        </div>
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                <a href="#/products"><img alt="" src="images/p4.jpg"></a>
+                <div class="mask">
+                        <a href="#/products">Quick View</a>
+                </div>
+                <a href="#/products" class="product_name">shrinking </a>
+                <p><a href="#" class="item_add"><i></i> <span class="item_price">$649.99</span></a></p>
+        </div>
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                <a href="#/products"><img alt="" src="images/p5.jpg"></a>
+                <div class="mask">
+                        <a href="#/products">Quick View</a>
+                </div>
+                <a href="#/products" class="product_name">perfectly simple</a>
+                <p><a href="#" class="item_add"><i></i> <span class="item_price">$750</span></a></p>
+        </div>
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                <a href="#/products"><img alt="" src="images/p6.jpg"></a>
+                <div class="mask">
+                        <a href="#/products">Quick View</a>
+                </div>
+                <a href="#/products" class="product_name">equal blame</a>
+                <p><a href="#" class="item_add"><i></i> <span class="item_price">$295.59</span></a></p>
+        </div>
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                <a href="#/products"><img alt="" src="images/p7.jpg"></a>
+                <div class="mask">
+                        <a href="#/products">Quick View</a>
+                </div>
+                <a href="#/products" class="product_name">Neque porro</a>
+                <p><a href="#" class="item_add"><i></i> <span class="item_price">$380</span></a></p>
+        </div>
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                <a href="#/products"><img alt="" src="images/p8.jpg"></a>
+                <div class="mask">
+                        <a href="#/products">Quick View</a>
+                </div>
+                <a href="#/products" class="product_name">perfectly simple</a>
+                <p><a href="#" class="item_add"><i></i> <span class="item_price">$540.6</span></a></p>
+        </div>
+        <div class="col-md-4 product simpleCart_shelfItem text-center">
+                                          <a href="#/products"><img alt="" src="images/p9.jpg"></a>
+                                          <div class="mask">
+                                                  <a href="#/products">Quick View</a>
+                                          </div>
+                                          <a href="#/products" class="product_name">praising pain</a>
+                                          <p><a href="#" class="item_add"><i></i> <span class="item_price">$229.5</span></a></p>
+              </div>-->
+        <div class="clearfix"></div>
+    </div>
+</div>

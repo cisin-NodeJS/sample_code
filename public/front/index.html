@@ -1,0 +1,319 @@
+<html ng-app="store">
+  <head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+    -->
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="css/component.css" rel='stylesheet' type='text/css' />
+    <link href="css/angular-slider.css" rel='stylesheet' type='text/css' />
+    <!-- Custom Theme files -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--webfont-->
+    <!-- for bootstrap working -->
+    <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
+    <!-- //for bootstrap working -->
+    <!-- cart -->
+    <script src="js/simpleCart.min.js"></script>
+    <!-- cart -->
+    <script src="js/imagezoom.js"></script>
+    <!-- FlexSlider -->
+    <script defer src="js/jquery.flexslider.js"></script>
+    <script>
+        // Can also be used with $(document).ready()
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails"
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+    <title>E-shop</title>
+    <!--        <base href="/browser/www/">-->
+  </head>
+  <body >
+  <!-- header start here-->
+  <div class="header">
+    <div class="header-top-strip">
+      <div class="container">
+        <div class="header-top-left" >
+          <ul ng-hide="log_status">
+            <li><a href="#/login"><span class="glyphicon glyphicon-user"> </span>Login</a></li>
+            <li><a href="#/registore"><span class="glyphicon glyphicon-lock"> </span>Create an Account</a></li>			
+          </ul>
+          <ul ng-show="log_status">
+            <li><a href=""><span class="glyphicon glyphicon-user"> </span>{{UserData.first_name}} {{UserData.last_name}}</a></li>
+            <li><a href="#/myAccount"><span class="glyphicon glyphicon-lock"> </span>MY ACCOUNT</a></li>	
+            <li ng-controller="AuthCntroller"><a ng-click="logout()"><span class="glyphicon glyphicon-lock"> </span>Log out</a></li>	
+          </ul>
+        </div>
+        <div class="header-right"  ng-controller="CartCtrl">
+          <ngcart-summary></ngcart-summary>
+          <!--                        <div class="cart box_1">
+                                      <a href="checkout.html">
+                                          <h3> <span class="simpleCart_total">$0.00</span> (<span class="simpleCart_quantity" id="simpleCart_quantity">0</span>)<img alt="" src="images/bag.png"></h3>
+                                      </a>	
+                                      <p><a class="simpleCart_empty" href="javascript:;">Empty cart</a></p>
+                                      <div class="clearfix"> </div>
+                                  </div>-->
+        </div> 
+        <div class="clearfix"> </div>
+      </div>
+    </div>
+  </div>
+  <!-- //header end here -->
+  <!-- banner top-->
+  <div class="banner-top" >
+    <div class="container">
+      <nav role="navigation" class="navbar navbar-default">
+        <div class="navbar-header">
+          <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="logo">
+            <h1><a href="#/"><span>E</span> -Shop</a></h1>
+          </div>
+        </div>
+          <!--/.navbar-header-->
+
+        <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse" >
+          <ul class="nav navbar-nav">
+            <li><a href="#/">Home</a></li>
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" ng-repeat="product in products">{{product.for}} <b class="caret"></b></a>
+              <ul class="dropdown-menu multi-column columns-3">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <ul class="multi-column-dropdown" id="horizontal-list">
+                      <h6>NEW IN</h6>
+                      <li><a href="#/products">New In Clothing</a></li>
+                      <li><a href="#/products">New In Bags</a></li>
+                      <li><a href="#/products">New In Shoes</a></li>
+                      <li><a href="#/products">New In Watches</a></li>
+                      <li><a href="#/products">New In Grooming</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-4">
+                    <ul class="multi-column-dropdown">
+                      <h6>CLOTHING</h6>
+                      <li><a href="#/products">Polos &amp; Tees</a></li>
+                      <li><a href="#/products">Casual Shirts</a></li>
+                      <li><a href="#/products">Casual Trousers</a></li>
+                      <li><a href="#/products">Jeans</a></li>
+                      <li><a href="#/products">Shorts &amp; 3/4th</a></li>
+                      <li><a href="#/products">Formal Shirts</a></li>
+                      <li><a href="#/products">Formal Trousers</a></li>
+                      <li><a href="#/products">Suits &amp; Blazers</a></li>
+                      <li><a href="#/products">Track Wear</a></li>
+                      <li><a href="#/products">Inner Wear</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-4">
+                    <ul class="multi-column-dropdown">
+                      <h6>WATCHES</h6>
+                      <li><a href="#/products">Analog</a></li>
+                      <li><a href="#/products">Chronograph</a></li>
+                      <li><a href="#/products">Digital</a></li>
+                      <li><a href="#/products">Watch Cases</a></li>
+                    </ul>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" >women <b class="caret"></b></a>
+              <ul class="dropdown-menu multi-column columns-3">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <ul class="multi-column-dropdown">
+                        <h6>NEW IN</h6>
+                        <li><a href="#/products">New In Clothing</a></li>
+                        <li><a href="#/products">New In Bags</a></li>
+                        <li><a href="#/products">New In Shoes</a></li>
+                        <li><a href="#/products">New In Watches</a></li>
+                        <li><a href="#/products">New In Beauty</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-4">
+                      <ul class="multi-column-dropdown">
+                        <h6>CLOTHING</h6>
+                        <li><a href="#/products">Polos &amp; Tees</a></li>
+                        <li><a href="#/products">Casual Shirts</a></li>
+                        <li><a href="#/products">Casual Trousers</a></li>
+                        <li><a href="#/products">Jeans</a></li>
+                        <li><a href="#/products">Shorts &amp; 3/4th</a></li>
+                        <li><a href="#/products">Formal Shirts</a></li>
+                        <li><a href="#/products">Formal Trousers</a></li>
+                        <li><a href="#/products">Suits &amp; Blazers</a></li>
+                        <li><a href="#/products">Track Wear</a></li>
+                        <li><a href="#/products">Inner Wear</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-4">
+                      <ul class="multi-column-dropdown">
+                        <h6>WATCHES</h6>
+                        <li><a href="#/products">Analog</a></li>
+                        <li><a href="#/products">Chronograph</a></li>
+                        <li><a href="#/products">Digital</a></li>
+                        <li><a href="#/products">Watch Cases</a></li>
+                      </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" >kids <b class="caret"></b></a>
+              <ul class="dropdown-menu multi-column columns-2">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <ul class="multi-column-dropdown">
+                      <h6>NEW IN</h6>
+                      <li><a href="#/products">New In Boys Clothing</a></li>
+                      <li><a href="#/products">New In Girls Clothing</a></li>
+                      <li><a href="#/products">New In Boys Shoes</a></li>
+                      <li><a href="#/products">New In Girls Shoes</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-6">
+                    <ul class="multi-column-dropdown">
+                      <h6>ACCESSORIES</h6>
+                      <li><a href="#/products">Bags</a></li>
+                      <li><a href="#/products">Watches</a></li>
+                      <li><a href="#/products">Sun Glasses</a></li>
+                      <li><a href="#/products">Jewellery</a></li>
+                    </ul>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                </ul>
+            </li>
+            <li><a href="typography.html">TYPO</a></li>
+            <li><a href="#/contact">CONTACT</a></li>
+          </ul>
+        </div>
+        <!--/.navbar-collapse-->
+      </nav>
+      <!--/.navbar-->
+    </div>
+  </div>
+  <!-- /banner top-->
+
+  <!--Page content here -->
+    <div ng-view></div> 
+    <!--/Page content here -->
+    <!--Footer start -->
+    <div class="footer">
+        <div class="container">
+          <div class="footer_top">
+            <div class="span_of_4">
+              <div class="col-md-3 span1_of_4">
+                <h4>Shop</h4>
+                <ul class="f_nav">
+                  <li><a >new arrivals</a></li>
+                  <li><a >men</a></li>
+                  <li><a >women</a></li>
+                  <li><a >accessories</a></li>
+                  <li><a >kids</a></li>
+                  <li><a >brands</a></li>
+                  <li><a >trends</a></li>
+                  <li><a >sale</a></li>
+                  <li><a >style videos</a></li>
+                </ul>	
+              </div>
+              <div class="col-md-3 span1_of_4">
+                <h4>help</h4>
+                <ul class="f_nav">
+                  <li><a >frequently asked  questions</a></li>
+                  <li><a >men</a></li>
+                  <li><a >women</a></li>
+                  <li><a >accessories</a></li>
+                  <li><a >kids</a></li>
+                  <li><a >brands</a></li>
+                </ul>	
+              </div>
+              <div class="col-md-3 span1_of_4">
+                <h4>account</h4>
+                <ul class="f_nav">
+                  <li><a href="#/login">login</a></li>
+                  <li><a href="#/registore">create an account</a></li>
+                  <li><a >create wishlist</a></li>
+                  <li><a href="#/cart">my shopping bag</a></li>
+                  <li><a >brands</a></li>
+                  <li><a >create wishlist</a></li>
+                </ul>				
+              </div>
+              <div class="col-md-3 span1_of_4">
+                <h4>popular</h4>
+                <ul class="f_nav">
+                  <li><a >new arrivals</a></li>
+                  <li><a >men</a></li>
+                  <li><a >women</a></li>
+                  <li><a >accessories</a></li>
+                  <li><a >kids</a></li>
+                  <li><a >brands</a></li>
+                  <li><a >trends</a></li>
+                  <li><a >sale</a></li>
+                  <li><a >style videos</a></li>
+                  <li><a >login</a></li>
+                  <li><a >brands</a></li>
+                </ul>			
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="cards text-center">
+              <img alt="" src="images/cards.jpg">
+          </div>
+          <div class="copyright text-center">
+              <p>&copy; 2015 Eshop. All Rights Reserved</p>
+          </div>
+        </div>
+    </div> 
+    <script type="text/javascript" src="node_modules/angular/angular.min.js" ></script> 
+    <script type="text/javascript" src="node_modules/angular-route/angular-route.min.js" ></script>
+    <!-- For add to cart-->
+    <script type="text/javascript" src="app/modules/ngCart.js" ></script> 
+    <!-- Price slider filtter-->
+    <script src="js/angular-slider.js"></script>
+    <!--config js -->
+    <script type="text/javascript" src="app/config/config.js"></script>
+    <!--angular App -->
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/modules/__ngCart.js"></script>
+
+    <!--angular controller -->
+    <script type="text/javascript" src="app/controllers/homeCtrl.js"></script>
+    <script type="text/javascript" src="app/controllers/ProductsController.js"></script>
+    <!--Auth controller for manage user CRUD,AUTH-->
+    <script type="text/javascript" src="app/controllers/AuthCntroller.js"></script>
+
+    <script>
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+          alert('i am here -' + device.uuid);
+      }
+      
+    </script>
+  </body>
+</html>

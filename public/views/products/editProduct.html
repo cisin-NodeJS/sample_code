@@ -1,0 +1,326 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">
+    Add Product <small>product add with all specification</small>
+</h3>
+<div class="page-bar" >
+  <ul class="page-breadcrumb">
+    <li>
+      <i class="fa fa-home"></i>
+      <a href="#/dashboard.html">Home</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <a ui-stage="products">Products</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <a ui-stage="ProductAdd">Add Product</a>
+    </li>
+  </ul>
+  <!-- side bar menu-->
+  <div class="page-toolbar">
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" dropdown-menu-hover data-delay="1000" data-close-others="true">
+        Actions <i class="fa fa-angle-down"></i>
+      </button>
+      <ul class="dropdown-menu pull-right" role="menu">
+        <li>
+          <a ui-stage="ProductAdd">
+            <i class="icon-user"></i> New Product 
+          </a>
+        </li> 
+        <li>
+            <a href="#">
+              <i class="icon-basket"></i> New order 
+            </a>
+        </li>
+        <li class="divider">
+        </li>
+        <li>
+          <a href="#">
+            <i class="icon-flag"></i> Pending Orders <span class="badge badge-danger">4</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="icon-users"></i> Pending Users <span class="badge badge-warning">12</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+
+<div class="row" ng-init="viewProduct()">
+  <div class="col-md-12">
+      <!-- BEGIN PORTLET-->
+    <div class="portlet box yellow-crusta">
+
+      <div class="portlet-body form">
+        <form class="form-horizontal form-bordered" name="productForm">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Product Title</label>
+            <div class="col-sm-4">
+              <input type="text" id="productTitle" name="title" class="form-control" ng-model="product.title" ng-pattern="/^[a-zA-Z0-9_ ]*$/" required>
+              <span class="error" style="color:red" ng-show="productForm.title.$touched && productForm.title.$invalid">
+                <span ng-show="productForm.title.$error.required">product title is required.</span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Select For</label>
+            <div class="col-sm-4">
+              <select id="form_control_1" class="form-control" name ="for" ng-model="product.for" required>
+                <option value="">Select Type</option>
+                <option value="Man" required>Man</option>
+                <option value="Women" required>Women</option>
+                <option value="Kids" required>Kids</option>
+              </select>
+              <span class="error" style="color:red" ng-show="productForm.for.$touched && productForm.for.$invalid">Select for</span>   
+            </div>
+          </div> 
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Short Description</label>
+            <div class="col-sm-4">
+              <textarea name="shortDescription" class="form-control" ng-model="product.shortDescription" maxlength="{{maxLengthshort}}" ng-keyup="check()"></textarea>
+              <div id="characters">
+                <span>Characters left: {{charecter}}</span>
+              </div>
+            </div>
+            
+          </div> 
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-4">
+              <textarea name="description" class="form-control" ng-model="product.description" maxlength="{{maxLength}}" ng-keyup="checksub()"></textarea>
+              <div id="characters">
+                <span>Characters left: {{subcharecter}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <label class="col-sm-3 control-label">Select Brand</label>
+              <div class="col-sm-4">
+                <select id="form_control_1" class="form-control" name ="brand" ng-model="product.brand" ng-init="getBrand()" required>
+                  <option value="">Select Brand</option>
+                  <option ng-repeat="brand in brands" value="{{brand._id}}" required>{{brand.title}}</option>
+                </select>
+                <span class="error" style="color:red" ng-show="productForm.brand.$touched && productForm.brand.$invalid">Select brand</span>   
+              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Select Category</label>
+            <div class="col-sm-4">
+              <select id="form_control_1" class="form-control" name ="category" ng-model="product.category" ng-init="getCategory()" ng-change="setcategory(product.category)">
+                <option value="">Select category</option>
+                <option ng-repeat="category in categories" value="{{category._id}}">{{category.title}}</option>
+              </select>	 
+            </div>
+          </div>
+          <div class="form-group" ng-if="isSubCategory">
+            <label class="col-sm-3 control-label">Select Sub-Category</label>
+            <div class="col-sm-4">
+              <select id="form_control_1" data-placeholder="Select Sub-Category" class="form-control input-medium select2me" name ="subcategory" ng-model="product.subcategory" required>
+                <option value="">Select Sub-category</option>
+                <option ng-repeat="subcategory in subcategories" value="{{subcategory._id}}" required>{{subcategory.title}}</option>
+              </select>
+              <span class="error" style="color:red" ng-show="productForm.subcategory.$touched && productForm.subcategory.$invalid">Select sub-category</span>   
+            </div>
+          </div>  
+          <!--product size -->
+          <div class="form-group">
+              <label class="col-sm-3 control-label">Product Size</label>
+              <div class="col-sm-8">
+                <div class="md-checkbox-inline">
+                  <div class="md-checkbox">
+                    <input  name="size[]" type="checkbox" class="md-check" id="checkbox6"  ng-true-value="'L'" ng-model="product.size[0]"  >
+                    <label for="checkbox6">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      L 
+                    </label>
+                  </div>
+                  <div class="md-checkbox">
+                    <input name="size[]"  type="checkbox" checked="" class="md-check" id="checkbox7"  ng-true-value="'M'" ng-model="product.size[1]"  />
+                    <label for="checkbox7">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      M 
+                    </label>
+                  </div>
+                  <div class="md-checkbox">
+                    <input  name="size[]" type="checkbox" class="md-check" id="checkbox8" ng-true-value="'XL'" ng-model="product.size[2]">
+                    <label for="checkbox8">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      XL
+                    </label>
+                  </div>
+                  <div class="md-checkbox">
+                    <input  name="size[]" type="checkbox" class="md-check" id="checkbox9" ng-true-value="'XXL'" ng-model="product.size[3]">
+                    <label for="checkbox9">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      XXL
+                    </label>
+                  </div>
+                  <div class="md-checkbox">
+                    <input  name="size[]" type="checkbox" class="md-check" id="checkbox10" ng-true-value="'XXXL'" ng-model="product.size[4]">
+                    <label for="checkbox10">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span>
+                      XXXL
+                    </label>
+                  </div>
+                </div>
+              </div>
+          </div> 
+          <!-- end size-->
+          <!--Price start -->
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Regular Price</label>
+            <div class="col-sm-4">
+              <div id="regularPrice_div">
+                <div style="width:150px;" class="input-group">
+                  <div class="spinner-buttons input-group-btn">
+                    <button class="btn spinner-up blue" type="button">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                  <input type="text"   class="spinner-input form-control" required="required" id="regularPrice" name="regularPrice" value="{{product.regularPrice}}" ng-model="product.regularPrice">
+                  <div class="spinner-buttons input-group-btn">
+                    <button class="btn spinner-down red" type="button">
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <span class="help-block">
+                Regular price 
+              </span>
+            </div>
+          </div>
+          <!-- /price end-->
+          <!--Price start -->
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Sale Price</label>
+            <div class="col-sm-4">
+              <div id="salePrice">
+                <div style="width:150px;" class="input-group">
+                  <div class="spinner-buttons input-group-btn">
+                    <button class="btn spinner-up blue" type="button">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                  <input type="text" class="spinner-input form-control" ng-model="product.salePrice" name="salePrice" id="sale" required >
+                  <div class="spinner-buttons input-group-btn">
+                    <button class="btn spinner-down red" type="button">
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <span class="help-block">
+                Sale price 
+              </span>
+            </div>
+          </div>
+          <!-- /price end-->
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">SKU</label>
+            <div class="col-sm-4">
+              <input type="text" id="productTitle" name="sku" ng-model="product.sku" class="form-control" style="text-transform: capitalize;"/>
+            </div>
+          </div> 
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Single Image</label>
+            <div class="col-sm-4">
+              <img alt="" class="img-responsive" ng-src="{{product.image.path}}" style="height: 200px; border:1px solid #021a40;" >
+              <input type="file" file-model="myFile"/>
+              <button ng-click="uploadFile()">upload</button>
+            </div>
+          </div> 
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Multiple Image</label>
+            <div class="col-sm-4">
+              <ul id="horizontal-list" >  
+                <li>
+                  <img src="{{firstimg}}" ng-click="img(firstimg)" class="img-responsive imgsrc" alt="" style="height: 60px;" />
+                </li>
+                <li>
+                  <img src="{{secimg}}" ng-click="img(secimg)" class="img-responsive imgsrc" alt="" style="height: 60px;"/>
+                </li>
+                <li>
+                  <img src="{{thirdimg}}" ng-click="img(thirdimg)" class="img-responsive imgsrc" alt="" style="height: 60px;"/>
+                </li>
+              </ul>  
+              <input type="file" id="file1" name="file" multiple
+                ng-files="getTheFiles($files)" required>
+              <input type="button" ng-click="uploadFiles()" value="Upload" />
+            </div>
+          </div>
+
+          <!--End file upload -->
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn purple" ng-disabled="product.title == '' || brand == '' || product.category == '' || product.subcategory == '' || product.salePrice == '' || productForm.title.$touched && productForm.title.$invalid" ng-click="editProduct();"><i class="fa fa-check"></i> Submit</button>
+
+                <a type="button" class="btn default" ui-sref="products">Back</a>
+              </div>
+            </div>
+          </div>
+
+        </form> 
+      </div>
+    </div>
+    <!-- END PORTLET-->
+  </div>
+</div>
+
+<!-- END MAIN CONTENT -->
+<script>
+  ComponentsFormTools.init(); // init todo page
+  var handleSpinners = function () {
+    var regularPrice = $('#regularPrice').val();
+    var salePrice = $('#sale').val({});
+    $('#salePrice').spinner({value: salePrice, min: 0});
+    $('#regularPrice_div').spinner({value: regularPrice, min: 0, max: 10000});
+    $('#spinner2').spinner({disabled: true});
+    $('#spinner3').spinner({value: 0, min: 0, max: 10});
+    $('#spinner4').spinner({value: 0, step: 5, min: 0, max: 200});
+  }
+  handleSpinners();
+</script>
+<style>
+    .col-md-8 {
+        width: 40%;
+    }
+
+    ul#horizontal-list {
+      min-width: 696px;
+      list-style: none;
+      padding-top: 20px;
+      display: inline-flex;
+
+    }
+    ul#horizontal-list li {
+      display: inline;
+    }
+
+    ul li .imgsrc{
+      border:1px solid #021a40;
+      max-width: 92%;
+    }
+</style>
+

@@ -1,0 +1,43 @@
+<div ng-hide="attrs.id">
+    <a class="btn btn-lg btn-primary" ng-disabled="true" ng-transclude></a>
+</div>
+<div ng-show="attrs.id" class="row">
+    <div ng-hide="inCart()">
+        <p class="col-md-4"><a href="#" class="item_add"><i></i> <span class="item_price">{{price| currency }}</span></a></p>
+        <span ng-show="quantityMax" class="col-md-2">
+            <select name="quantity" id="quantity" ng-model="q"
+                    ng-options=" v for v in qtyOpt"></select>
+        </span>
+
+        <span class="col-md-2 btn btn-sm btn-primary" ng-click="ngCart.addItem(id, name, price, q, data)">Buy</span> 
+
+    </div>
+    <div  ng-show="inCart()" class="row">
+        <span class="col-md-8"><a href="#cart"> <u>View Cart</u></a> </span>
+        <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Remove</a>
+    </div>
+
+</div>
+
+<!--------------------------------------------------------Backup------------------->
+<!--<div ng-hide="attrs.id">
+    <a class="btn btn-lg btn-primary" ng-disabled="true" ng-transclude></a>
+</div>
+<div ng-show="attrs.id" class="row">
+    <div>
+        <p class="col-md-4">
+            <a class="item_add"
+               ng-click="ngCart.addItem(id, name, price, q, data)"
+               >  <i></i> <span class="item_price">{{price| currency }}</span> </a>
+        </p>
+        <span ng-show="quantityMax" class="col-md-2">
+            <select name="quantity" id="quantity" ng-model="q"
+                    ng-options=" v for v in qtyOpt"></select>
+        </span> 
+        <mark  ng-show="inCart()" class="col-md-2">
+            <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Remove</a>
+        </mark>
+    </div>
+
+</div>
+---------->

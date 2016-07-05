@@ -1,0 +1,11 @@
+<div class="cart box_1">
+    <a href="#/cart">
+        <h3> <span class="simpleCart_total">{{ ngCart.totalCost() | currency}}</span> (<span class="simpleCart_quantity" id="simpleCart_quantity">{{ ngCart.getTotalItems()}}</span>)<img alt="" src="images/bag.png"></h3>
+    </a>	
+<!--    <p><a class="simpleCart_empty" href="javascript:;">
+            <span ng-show="ngCart.getTotalItems() == 0">Empty cart</span>
+            <span ng-hide="ngCart.getTotalItems() == 0">Check-out</span>
+        </a>
+    </p>-->
+    <div class="clearfix"> </div>
+</div>
